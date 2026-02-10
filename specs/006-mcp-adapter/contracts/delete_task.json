@@ -1,0 +1,80 @@
+{
+  "tool_name": "delete_task",
+  "description": "Delete an existing task. User must own the task. Task is permanently removed from database.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "user_id": {
+        "type": "string",
+        "description": "Unique identifier of the user deleting the task"
+      },
+      "task_id": {
+        "type": "integer",
+        "description": "ID of the task to delete"
+      }
+    },
+    "required": ["user_id", "task_id"]
+  },
+  "output_schema": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "integer",
+        "description": "ID of the deleted task"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["deleted"],
+        "description": "Confirmation that task was deleted"
+      }
+    },
+    "required": ["id", "status"]
+  },
+  "error_cases": [
+    {
+      "condition": "user_id is missing or empty",
+      "error": "user_id is required",
+      "http_equivalent": 400
+    },
+    {
+      "condition": "task_id is missing or not an integer",
+      "error": "task_id must be an integer",
+      "http_equivalent": 400
+    },
+    {
+      "condition": "task_id does not exist or user does not own task",
+      "error": "Task not found or access denied",
+      "http_equivalent": 404
+    },
+    {
+      "condition": "Database connection fails",
+      "error": "Database connection failed",
+      "http_equivalent": 500
+    }
+  ],
+  "notes": {
+    "destructive": "This operation is not idempotent. Deleting an already-deleted task returns an error.",
+    "data_loss": "Deleted tasks cannot be recovered. No soft delete or archiving."
+  },
+  "examples": [
+    {
+      "name": "Delete a task",
+      "input": {
+        "user_id": "user123",
+        "task_id": 1
+      },
+      "output": {
+        "id": 1,
+        "status": "deleted"
+      }
+    },
+    {
+      "name": "Attempt to delete already-deleted task",
+      "input": {
+        "user_id": "user123",
+        "task_id": 1
+      },
+      "error": "Task not found or access denied"
+    }
+  ]
+}
