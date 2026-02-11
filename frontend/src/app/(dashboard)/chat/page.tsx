@@ -2,21 +2,17 @@
 
 import { useAuth } from "@/lib/auth/useAuth";
 import ChatInterface from "@/components/chat/ChatInterface";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner";
+import { ChatSkeleton } from "@/components/skeletons/ChatSkeleton";
 
 export default function ChatPage() {
   const { user, isAuthenticated } = useAuth();
 
   if (!isAuthenticated || !user) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <LoadingSpinner />
-      </div>
-    );
+    return <ChatSkeleton />;
   }
 
   return (
-    <div className="h-[calc(100vh-9.5rem)]">
+    <div className="fixed inset-0 top-16 lg:top-20 lg:left-64">
       <ChatInterface userId={user.id} />
     </div>
   );

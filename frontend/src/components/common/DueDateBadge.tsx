@@ -1,6 +1,6 @@
 'use client'
 
-import { Calendar } from 'lucide-react'
+import { Calendar, AlertCircle } from 'lucide-react'
 import { formatDueDateStatus } from '@/utils/formatting'
 
 /**
@@ -17,24 +17,6 @@ function getIconSize(size: 'sm' | 'md' | 'lg'): number {
     default:
       return 16
   }
-}
-
-/**
- * Get color based on due date status
- */
-function getDueDateColor(isOverdue: boolean, isDueToday: boolean): string {
-  if (isOverdue) return '#dc2626' // red-600
-  if (isDueToday) return '#ea580c' // orange-600
-  return '#4b5563' // gray-700
-}
-
-/**
- * Get background color with opacity
- */
-function getDueDateBgColor(isOverdue: boolean, isDueToday: boolean): string {
-  if (isOverdue) return '#fecaca' // red-100
-  if (isDueToday) return '#fed7aa' // orange-100
-  return '#f3f4f6' // gray-100
 }
 
 /**
@@ -96,32 +78,39 @@ export function DueDateBadge({
   showIcon = true,
   showText = true,
 }: DueDateBadgeProps) {
-  const color = getDueDateColor(isOverdue, isDueToday)
-  const bgColor = getDueDateBgColor(isOverdue, isDueToday)
   const label = formatDueDateStatus(isOverdue, isDueToday, daysUntilDue)
   const iconSize = getIconSize(size)
 
-  const sizeClasses = {
-    sm: 'px-2 py-1 text-xs',
-    md: 'px-3 py-1 text-sm',
-    lg: 'px-4 py-2 text-base',
+  // Subtle colors based on due date status
+  let color = '#6b7280' // default gray for upcoming
+  if (isOverdue) {
+    color = '#991b1b' // red-900 (subtle red for overdue)
+  } else if (isDueToday) {
+    color = '#b45309' // amber-700 (subtle orange for due today)
+  }
+
+  const textSizeMap = {
+    sm: 'text-xs',
+    md: 'text-sm',
+    lg: 'text-base',
   }
 
   return (
     <div
-      className={`inline-flex items-center gap-1.5 rounded border font-medium ${sizeClasses[size]}`}
-      style={{
-        backgroundColor: bgColor,
-        borderColor: color,
-        borderWidth: '1.5px',
-        color: color,
-      }}
+      className={`inline-flex items-center gap-1 ${textSizeMap[size]}`}
+      style={{ color }}
       title={`${label} - ${dueDate}`}
       role="badge"
       aria-label={`Due date: ${label}`}
     >
-      {showIcon && <Calendar size={iconSize} strokeWidth={2.5} />}
-      {showText && <span>{label}</span>}
+      {showIcon &&
+        (isOverdue ? (
+          <AlertCircle size={iconSize} strokeWidth={2} />
+        ) : (
+          <Calendar size={iconSize} strokeWidth={2} />
+        ))
+      }
+      {showText && <span className="font-medium">{label}</span>}
     </div>
   )
 }

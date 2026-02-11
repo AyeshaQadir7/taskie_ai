@@ -1,22 +1,7 @@
 'use client'
 
-import { getPriorityColor, getPriorityColorWithOpacity, getPriorityLabel, getPriorityIcon } from '@/lib/utils/priority'
-
-/**
- * Get icon size based on badge size
- */
-function getIconSize(size: 'sm' | 'md' | 'lg'): number {
-  switch (size) {
-    case 'sm':
-      return 14
-    case 'md':
-      return 16
-    case 'lg':
-      return 20
-    default:
-      return 16
-  }
-}
+import { Flag } from 'lucide-react'
+import { getPriorityLabel } from '@/lib/utils/priority'
 
 /**
  * Props for the PriorityBadge component
@@ -61,35 +46,55 @@ export function PriorityBadge({
   showIcon = true,
   showText = true,
 }: PriorityBadgeProps) {
-  const color = getPriorityColor(priority)
   const label = getPriorityLabel(priority)
-  const IconComponent = getPriorityIcon(priority)
-  const iconSize = getIconSize(size)
 
-  const sizeClasses = {
-    sm: 'px-2 py-1 text-xs',
-    md: 'px-3 py-1 text-sm',
-    lg: 'px-4 py-2 text-base',
+  const iconSizeMap = {
+    sm: 14,
+    md: 16,
+    lg: 18,
   }
 
-  const backgroundColor = getPriorityColorWithOpacity(priority, 0.15)
-  const borderColor = color
+  const textSizeMap = {
+    sm: 'text-xs',
+    md: 'text-sm',
+    lg: 'text-base',
+  }
+
+  // Color based on priority (subtle colors)
+  const colorMap: Record<string, string> = {
+    high: '#991b1b',      // red-900 (subtle)
+    medium: '#b45309',    // amber-700 (subtle)
+    low: '#059669',       // green-600 (subtle)
+  }
+
+  // Background colors (lighter versions)
+  const bgColorMap: Record<string, string> = {
+    high: '#fef2f2',      // red-50 (very light)
+    medium: '#fffbeb',    // amber-50 (very light)
+    low: '#f0fdf4',       // green-50 (very light)
+  }
+
+  // Border colors with reduced opacity
+  const borderColorMap: Record<string, string> = {
+    high: 'rgba(153, 27, 27, 0.2)',      // red with 20% opacity
+    medium: 'rgba(180, 83, 9, 0.2)',     // amber with 20% opacity
+    low: 'rgba(5, 150, 105, 0.2)',       // green with 20% opacity
+  }
+
+  const color = colorMap[priority?.toLowerCase() || 'medium'] || colorMap['medium']
+  const bgColor = bgColorMap[priority?.toLowerCase() || 'medium'] || bgColorMap['medium']
+  const borderColor = borderColorMap[priority?.toLowerCase() || 'medium'] || borderColorMap['medium']
 
   return (
     <div
-      className={`inline-flex items-center gap-1.5 rounded border font-medium ${sizeClasses[size]}`}
-      style={{
-        backgroundColor: backgroundColor,
-        borderColor: borderColor,
-        borderWidth: '1.5px',
-        color: borderColor,
-      }}
+      className={`inline-flex items-center gap-1 px-2 py-1 rounded-full border ${textSizeMap[size]}`}
       title={label}
       role="badge"
       aria-label={`Priority: ${label}`}
+      style={{ color, backgroundColor: bgColor, borderColor, borderWidth: '1px' }}
     >
-      {showIcon && <IconComponent size={iconSize} strokeWidth={2.5} />}
-      {showText && <span>{label}</span>}
+      {showIcon && <Flag size={iconSizeMap[size]} strokeWidth={2} />}
+      {showText && <span className="font-medium">{label}</span>}
     </div>
   )
 }

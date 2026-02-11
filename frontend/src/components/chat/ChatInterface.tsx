@@ -275,20 +275,26 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
   const isEmpty = messages.length === 0 && !isLoading;
 
   return (
-    <div className="flex flex-col h-full bg-white rounded-lg overflow-hidden">
+    <div className="flex flex-col h-full w-full bg-white overflow-hidden">
       {/* Messages Container */}
       <div className="flex-1 overflow-y-auto">
         {isEmpty ? (
           /* Empty State - Welcome Screen */
           <div className="flex items-center justify-center h-full">
-            <div className="text-center px-4 max-w-lg">
+            <div className="text-center px-4 ">
               <div className="w-14 h-14 rounded-2xl bg-violet flex items-center justify-center mx-auto mb-5 shadow-lg shadow-violet/20">
                 <Grid2x2Check className="w-8 h-8 text-white" />
               </div>
-              <h2 className="text-2xl font-grotesk font-semibold text-slate mb-2">
+              <h2 className="text-2xl font-grotesk font-semibold text-slate mb-2"
+                style={{
+                  fontFamily: "'Space Grotesk'"
+                }}>
                 Hi! I'm Taskie
               </h2>
-              <p className="text-base text-slate-light/70 mb-8">
+              <p className="text-base text-slate-light/70 mb-8"
+                style={{
+                  fontFamily: "'Space Grotesk'"
+                }}>
                 Your AI task assistant. What would you like to do?
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-3">
@@ -298,10 +304,14 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                     <button
                       key={chip.text}
                       onClick={() => handleSendMessage(chip.text)}
-                      className="group flex items-center gap-3 px-5 py-3.5 text-sm font-medium border border-slate-light/15 rounded-xl text-slate bg-white hover:border-violet hover:shadow-lg hover:shadow-violet/10 transition-all duration-200"
+                      className="group flex items-center gap-3 px-5 py-3.5 text-sm font-medium  border border-violet/50 rounded-md text-slate bg-[#fff] hover:border-violet hover:shadow-lg hover:shadow-violet/10 transition-all duration-200 "
+                      style={{
+                        fontFamily: "'Space Grotesk'"
+                      }}
                     >
-                      <span className="w-8 h-8 rounded-lg bg-violet/10 flex items-center justify-center group-hover:bg-violet group-hover:text-white transition-colors duration-200">
-                        <Icon className="w-4 h-4 text-violet group-hover:text-white" />
+
+                      <span className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center group-hover:text-white transition-colors duration-200">
+                        <Icon strokeWidth={2} className="w-5 h-5 text-gray-400 group-hover:text-violet" />
                       </span>
                       <span>{chip.text}</span>
                     </button>
@@ -312,21 +322,23 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
           </div>
         ) : (
           /* Messages */
-          <div className="max-w-3xl mx-auto px-4 py-6">
-            {/* Chat Header with Clear Button */}
-            <div className="flex justify-end mb-4">
-              <button
-                onClick={handleClearChat}
-                className="flex items-center gap-2 px-3 py-1.5 text-sm text-slate-light/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200"
-                title="Clear chat history"
-              >
-                <Trash2 className="w-4 h-4" />
-                <span>Clear chat</span>
-              </button>
+          <div className="flex flex-col h-full w-full px-0 py-0">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1 flex flex-col">
+              {/* Chat Header with Clear Button */}
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={handleClearChat}
+                  className="flex items-center gap-2 px-3 py-1.5 text-sm border bg-[#fff]/70 text-slate-light/60 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors duration-200"
+                  title="Clear chat history"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span>Clear chat</span>
+                </button>
+              </div>
+              <MessageList messages={messages} />
+              {isLoading && <LoadingIndicator />}
+              <div ref={messagesEndRef} />
             </div>
-            <MessageList messages={messages} />
-            {isLoading && <LoadingIndicator />}
-            <div ref={messagesEndRef} />
           </div>
         )}
       </div>

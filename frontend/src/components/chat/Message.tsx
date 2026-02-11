@@ -31,9 +31,9 @@ const Message: React.FC<MessageProps> = ({ message }) => {
 
   if (isUser) {
     return (
-      <div className="flex justify-end mb-4 animate-fade-in">
+      <div className="flex justify-end py-2 animate-fade-in">
         <div className="max-w-[80%] sm:max-w-[70%]">
-          <div className="bg-violet text-white px-4 py-2 rounded-xl rounded-br-sm shadow-sm">
+          <div className="bg-violet text-white px-4 py-3 rounded-xl rounded-br-sm shadow-sm">
             <p className="text-[15px] whitespace-pre-wrap break-words leading-relaxed">
               {message.content}
             </p>
@@ -44,7 +44,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
   }
 
   return (
-    <div className="flex justify-start gap-3 mb-4 animate-fade-in">
+    <div className="flex justify-start gap-3 py-2 animate-fade-in">
       {/* Avatar */}
       <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-violet flex items-center justify-center shadow-sm">
         <Grid2x2Check className="w-4 h-4 text-white" />
@@ -52,7 +52,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
 
       {/* Content */}
       <div className="flex-1 min-w-0 max-w-[85%] sm:max-w-[75%]">
-        <div className="text-slate bg-gray-200/60 px-4 py-2.5 rounded-2xl rounded-tl-sm">
+        <div className="text-slate bg-gray-200/60 px-4 py-3 rounded-2xl rounded-tl-sm">
           <p className="text-[15px] whitespace-pre-wrap break-words leading-relaxed">
             {message.content}
           </p>
@@ -60,7 +60,7 @@ const Message: React.FC<MessageProps> = ({ message }) => {
 
         {/* Tool Calls */}
         {message.tool_calls && message.tool_calls.length > 0 && (
-          <div className="mt-2 space-y-2">
+          <div className="mt-3 space-y-2">
             {message.tool_calls.map((toolCall) => (
               <ToolCallDisplay key={toolCall.id} toolCall={toolCall} />
             ))}

@@ -54,7 +54,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Profile Information */}
-        <div className="rounded-lg bg-white p-8 shadow-sm border border-gray-200 space-y-6">
+        <div className="rounded-lg border-violet-light/60 bg-[#fff] p-8 shadow-sm border border-gray-200 space-y-6">
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Full Name

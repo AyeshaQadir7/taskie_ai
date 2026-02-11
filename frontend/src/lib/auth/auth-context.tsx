@@ -135,9 +135,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         // Save token to localStorage
         saveToken(data.token, data.user);
 
-        // Redirect to tasks page
+        // Redirect to dashboard page
         if (typeof window !== "undefined") {
-          window.location.href = "/tasks";
+          window.location.href = "/dashboard";
         }
       } catch (err) {
         // Don't overwrite auth error that was already set above
@@ -214,9 +214,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
       // Save token to localStorage
       saveToken(data.token, data.user);
 
-      // Redirect to tasks page
+      // Redirect to dashboard page
       if (typeof window !== "undefined") {
-        window.location.href = "/tasks";
+        window.location.href = "/dashboard";
       }
     } catch (err) {
       // Don't overwrite auth error that was already set above

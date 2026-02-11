@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from "react";
-import { Trash2, Pencil, X, Check } from "lucide-react";
+import { Trash2, Pencil, X, Check, AlertCircle, Clock } from "lucide-react";
 import { Task } from "@/lib/api/types";
 import { formatRelativeTime } from "@/utils/formatting";
 import { Button } from "@/components/common/Button";
@@ -62,11 +62,10 @@ export function TaskItem({
 
   return (
     <div
-      className={`group relative rounded-xl border transition-all duration-200 ${
-        task.completed
-          ? "border-gray-200 bg-gray-50 hover:bg-gray-100"
-          : "border-gray-200 bg-white hover:border-gray-300 hover:shadow-md"
-      }`}
+      className={`group relative rounded-xl transition-all duration-200 ${task.completed
+          ? "bg-gray-50"
+          : "bg-[#fff] border border-violet-light/60"
+        }`}
     >
       <div className="flex items-start gap-4 p-4">
         {/* Completion Checkbox */}
@@ -82,14 +81,28 @@ export function TaskItem({
 
         {/* Task Content */}
         <div className="flex-1 min-w-0">
-          <div className="flex flex-wrap items-start gap-2 sm:items-center">
-            <h3
-              className={`text-base font-semibold transition-colors ${
-                task.completed ? "text-gray-400 line-through" : "text-gray-900"
+          <h3
+            className={`text-base font-medium transition-colors ${task.completed ? "text-gray-400 line-through" : "text-gray-900"
               }`}
+            style={{
+
+              fontFamily: "'Space Grotesk', sans-serif",
+            }}
+          >
+            {task.title}
+          </h3>
+
+          {task.description && (
+            <p
+              className={`mt-2 text-sm leading-relaxed transition-colors ${task.completed ? "text-gray-400" : "text-gray-600"
+                }`}
             >
-              {task.title}
-            </h3>
+              {task.description}
+            </p>
+          )}
+
+          {/* Badges below title and description */}
+          <div className="flex flex-wrap items-center gap-3 mt-2">
             {task.priority && (
               <PriorityBadge
                 priority={task.priority}
@@ -107,21 +120,12 @@ export function TaskItem({
                 showText={true}
               />
             )}
+            {/* Created time with clock icon */}
+            <div className="flex items-center gap-1 text-xs text-gray-500">
+              <Clock size={14} strokeWidth={2} />
+              <span>{formatRelativeTime(task.createdAt)}</span>
+            </div>
           </div>
-
-          {task.description && (
-            <p
-              className={`mt-2 text-sm leading-relaxed transition-colors ${
-                task.completed ? "text-gray-400" : "text-gray-600"
-              }`}
-            >
-              {task.description}
-            </p>
-          )}
-
-          <p className="mt-3 text-xs text-gray-500">
-            Created {formatRelativeTime(task.createdAt)}
-          </p>
         </div>
 
         {/* Actions */}

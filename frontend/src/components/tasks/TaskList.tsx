@@ -13,8 +13,6 @@ interface TaskListProps {
   onEdit?: (taskId: string) => void
   onDelete?: (taskId: string) => Promise<void>
   onComplete?: (taskId: string) => Promise<void>
-  onSortChange?: (sortBy: string) => void
-  sortBy?: string
   isLoading?: boolean
 }
 
@@ -23,8 +21,6 @@ export function TaskList({
   onEdit,
   onDelete,
   onComplete,
-  onSortChange,
-  sortBy = 'newest',
   isLoading = false,
 }: TaskListProps) {
   if (tasks.length === 0) {
@@ -37,24 +33,6 @@ export function TaskList({
 
   return (
     <div className="space-y-6">
-      {/* Sort Controls */}
-      <div className="flex items-center gap-3">
-        <label htmlFor="sort-select" className="text-sm font-medium text-gray-700">
-          Sort by:
-        </label>
-        <select
-          id="sort-select"
-          value={sortBy}
-          onChange={(e) => onSortChange?.(e.target.value)}
-          disabled={isLoading}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors disabled:opacity-50"
-        >
-          <option value="newest">Newest First</option>
-          <option value="priority">Priority</option>
-          <option value="due_date">Due Date (Earliest)</option>
-          <option value="-due_date">Due Date (Latest)</option>
-        </select>
-      </div>
       {/* Incomplete Tasks Section */}
       {incompleteTasks.length > 0 && (
         <div>

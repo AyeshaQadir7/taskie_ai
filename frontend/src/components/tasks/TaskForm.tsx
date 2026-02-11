@@ -156,6 +156,7 @@ export function TaskForm({
       <div className="flex gap-3">
         <Button
           type="submit"
+          variant="secondary2"
           isLoading={isLoading}
           disabled={isLoading}
           className="flex-1"
