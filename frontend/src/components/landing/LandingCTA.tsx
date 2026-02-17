@@ -5,7 +5,10 @@
  * Part of User Story 1: Landing Page
  */
 
+'use client';
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { Lock, Check } from "lucide-react";
 import { Button } from "@/components/common/Button";
 
@@ -19,6 +22,31 @@ interface LandingCTAProps {
   freeText?: string;
 }
 
+const containerVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.6,
+      staggerChildren: 0.15,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
 export function LandingCTA({
   headline = "Ready to master your",
   headlineHighlight = "productivity with AI?",
@@ -29,29 +57,39 @@ export function LandingCTA({
   freeText = "AI agent included",
 }: LandingCTAProps) {
   return (
-    <section className="relative py-24 px-4 sm:px-6 lg:px-8">
+    <motion.section
+      className="relative py-24 px-4 sm:px-6 lg:px-8"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={containerVariants}
+    >
       <div className="w-full max-w-6xl mx-auto bg-gradient-to-br from-violet to-violet-dark rounded-2xl lg:rounded-3xl py-20 sm:py-18 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
         <div className="w-full max-w-3xl mx-auto text-center relative z-10">
           {/* Headline with highlight */}
-          <h2
+          <motion.h2
             className="text-3xl sm:text-3xl lg:text-5xl font-semibold text-white mb-8 tracking-tight leading-tight"
             style={{
               color: "#ffffff",
               fontFamily: "'Space Grotesk', sans-serif",
             }}
+            variants={itemVariants}
           >
             {headline}
             <br />
             <span className="">{headlineHighlight}</span>
-          </h2>
+          </motion.h2>
 
           {/* Description */}
-          <p className="text-md sm:text-lg text-white mb-12 leading-relaxed max-w-2xl mx-auto">
+          <motion.p
+            className="text-md sm:text-lg text-white mb-12 leading-relaxed max-w-2xl mx-auto"
+            variants={itemVariants}
+          >
             Get AI-powered assistance, real-time dashboards, and intelligent <br/> prioritization all in one place.
-          </p>
+          </motion.p>
 
           {/* Primary CTA Button - bold and prominent */}
-          <div className="mb-12">
+          <motion.div className="mb-12" variants={itemVariants}>
             <Link href={primaryCtaHref}>
               <Button
                 variant="accent"
@@ -61,10 +99,13 @@ export function LandingCTA({
                 {primaryCtaText}
               </Button>
             </Link>
-          </div>
+          </motion.div>
 
           {/* Trust indicators */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 border-t border-white/20">
+          <motion.div
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 border-t border-white/20"
+            variants={itemVariants}
+          >
             {/* Badge 1 */}
             <div className="flex items-center gap-2">
               <Check color="#ffffff" strokeWidth={1.5} />
@@ -80,9 +121,9 @@ export function LandingCTA({
                 {freeText}
               </span>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
