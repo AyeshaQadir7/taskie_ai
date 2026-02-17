@@ -19,21 +19,21 @@ interface LandingHeaderProps {
 export function LandingHeader({
   brandName = "Taskie",
   navLinks = [
-    { label: "Product", href: "#features" },
-    { label: "Workflow", href: "#workflow" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "Features", href: "#features" },
+    { label: "Dashboard", href: "#valueprop-dashboard" },
+    { label: "AI Assistant", href: "#valueprop-assistant" },
   ],
 }: LandingHeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50">
+    <header className="sticky top-0 z-50 bg-transparent backdrop-blur-xl border-b border-gray-200/50">
       <nav className="px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between max-w-7xl mx-auto">
           {/* Brand/Logo */}
-          <Link href="/" className="group flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-violet flex items-center justify-center shadow-md">
-              <Grid2x2Check className="w-6 h-6 text-white" />
+          <Link href="/" className="group flex items-center ">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+              <Grid2x2Check color="#3d444f" className="w-6 h-6 text-violet" />
             </div>
             <span
               className="text-xl font-bold hidden sm:block"

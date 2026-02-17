@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.23",
     "better-auth": "latest",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.34.0",
     "lucide-react": "^0.469.0",
     "next": "^15.2.4",
     "react": "^19",

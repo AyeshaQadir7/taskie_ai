@@ -20,21 +20,21 @@ interface LandingCTAProps {
 }
 
 export function LandingCTA({
-  headline = "Ready to reclaim your",
-  headlineHighlight = "time and find focus?",
-  description = "Join 50,000+ high-achievers who have abandoned traditional planners.",
-  primaryCtaText = "Try Taskie for free",
+  headline = "Ready to master your",
+  headlineHighlight = "productivity with AI?",
+  description = "Experience the future of task management. Get AI-powered assistance, real-time dashboards, and intelligent prioritization—all in one place.",
+  primaryCtaText = "Start Saving Time",
   primaryCtaHref = "/signup",
-  trustBadgeText = "Join 50,000+ users achieving more",
-  freeText = "No credit card required",
+  trustBadgeText = "Free forever for individuals",
+  freeText = "AI agent included",
 }: LandingCTAProps) {
   return (
     <section className="relative py-24 px-4 sm:px-6 lg:px-8">
-      <div className="w-full max-w-7xl mx-auto bg-gradient-to-br from-violet to-violet-dark rounded-2xl lg:rounded-3xl py-20 sm:py-18 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
+      <div className="w-full max-w-6xl mx-auto bg-gradient-to-br from-violet to-violet-dark rounded-2xl lg:rounded-3xl py-20 sm:py-18 px-6 sm:px-8 lg:px-12 relative overflow-hidden">
         <div className="w-full max-w-3xl mx-auto text-center relative z-10">
           {/* Headline with highlight */}
           <h2
-            className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-white mb-8 tracking-tight leading-tight"
+            className="text-3xl sm:text-3xl lg:text-5xl font-semibold text-white mb-8 tracking-tight leading-tight"
             style={{
               color: "#ffffff",
               fontFamily: "'Space Grotesk', sans-serif",
@@ -46,8 +46,8 @@ export function LandingCTA({
           </h2>
 
           {/* Description */}
-          <p className="text-lg sm:text-xl text-white/90 mb-12 leading-relaxed max-w-2xl mx-auto">
-            {description}
+          <p className="text-md sm:text-lg text-white mb-12 leading-relaxed max-w-2xl mx-auto">
+            Get AI-powered assistance, real-time dashboards, and intelligent <br/> prioritization all in one place.
           </p>
 
           {/* Primary CTA Button - bold and prominent */}

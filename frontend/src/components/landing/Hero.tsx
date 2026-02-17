@@ -1,158 +1,268 @@
 /**
  * Hero Component
  * Main hero section for landing page with headline, subheadline, and CTA
+ * Showcases core task management features with interactive demo
  * Part of User Story 1: Landing Page
  */
 
-import { Button } from "@/components/common/Button";
-import Link from "next/link";
+'use client';
 
-interface HeroProps {
-  headline?: string;
-  subheadline?: string;
-  ctaText?: string;
-  ctaHref?: string;
-  secondaryCtaText?: string;
-  secondaryCtaHref?: string;
+import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { CheckCircle2, Zap, Clock, Sparkles, ListTodo, Calendar, Tag, Lightbulb, Target, CheckSquare } from 'lucide-react';
+import { Button } from '../common/Button';
+import Link from 'next/link';
+
+interface FloatingCard {
+  id: string;
+  icon: React.ReactNode;
+  color: string;
+  position: {
+    top?: string;
+    bottom?: string;
+    left?: string;
+    right?: string;
+  };
 }
 
-export function Hero({
-  headline = "Manage Your Tasks Effortlessly",
-  subheadline = "A modern, intuitive todo application designed for productivity and clarity",
-  ctaText = "Get Started Free",
-  ctaHref = "/signup",
-  secondaryCtaText = "Learn More",
-  secondaryCtaHref = "#features",
-}: HeroProps) {
+const floatingCards: FloatingCard[] = [
+  {
+    id: 'tasks',
+    icon: <ListTodo size={32} strokeWidth={1.5} />,
+    color: '#3d444f',
+    position: { top: '-15%', left: '3%' },
+  },
+  {
+    id: 'check',
+    icon: <CheckCircle2 size={32} strokeWidth={1.5}/>,
+    color: '#3d444f',
+    position: { top: '-15%', right: '3%', left: 'auto' },
+  },
+  {
+    id: 'calendar',
+    icon: <Calendar size={32} strokeWidth={1.5}/>,
+    color: '#3d444f',
+    position: { bottom: '20%', left: '2%', top: 'auto' },
+  },
+  {
+    id: 'target',
+    icon: <Target size={32} strokeWidth={1.5}/>,
+    color: '#3d444f',
+    position: { bottom: '15%', right: '2%', left: 'auto', top: 'auto' },
+  },
+  {
+    id: 'zap',
+    icon: <Zap size={32} strokeWidth={1.5}/>,
+    color: '#3d444f',
+    position: { top: '20%', right: '15%', left: 'auto' },
+  },
+  {
+    id: 'lightbulb',
+    icon: <Lightbulb size={32} strokeWidth={1.5}/>,
+    color: '#3d444f',
+    position: { top: '20%', left: '15%' },
+  },
+];
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
+export function Hero() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        // Normalized mouse position (-1 to 1)
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        setMousePosition({ x, y });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <section
-      className="relative min-h-screen flex flex-col items-center justify-center px-4 py-16 overflow-hidden"
-      style={{ backgroundColor: "#f5f5f5" }}
+      ref={containerRef}
+      className="relative flex flex-col items-center justify-start px-4 py-28 overflow-hidden"
     >
+      {/* Animated background blurs */}
       <div
-        className="absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl opacity-40"
-        style={{ backgroundColor: "#c68dff" }}
-      ></div>
-      <div
-        className="absolute bottom-32 left-10 w-80 h-80 rounded-full blur-3xl opacity-40"
-        style={{ backgroundColor: "#cbe857" }}
-      ></div>
+        className="absolute top-20 right-10 w-72 h-72 rounded-full blur-3xl opacity-30 pointer-events-none"
+        style={{
+          backgroundColor: '#c68dff',
 
-      <div className="w-full max-w-4xl space-y-6 text-center relative z-10">
-        {/* Decorative badge with accent color */}
-        <div className="flex items-center justify-center gap-2">
-          <div
-            className="h-[2px] w-6 rounded-full"
-            style={{ backgroundColor: "#c68dff" }}
-          ></div>
-          <span
-            className="text-sm font-semibold tracking-wider uppercase"
-            style={{ color: "#c68dff" }}
+        }}
+ 
+      />
+      <div
+        className="absolute bottom-32 left-10 w-80 h-80 rounded-full blur-3xl opacity-30 pointer-events-none"
+        style={{
+          backgroundColor: '#cbe857',
+
+        }}
+
+      />
+
+      <motion.div
+        className="w-full max-w-6xl space-y-6 relative z-10"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
+        {/* Header badge */}
+        <motion.div
+          className="flex items-center justify-center gap-2"
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <h4
+            className="px-3 py-1 rounded-full text-sm font-semibold text-violet-dark bg-violet/10 border border-violet/30 uppercase"
           >
-            Tasks Made Simple
-          </span>
-          <div
-            className="h-[2px] w-6 rounded-full"
-            style={{ backgroundColor: "#c68dff" }}
-          ></div>
-        </div>
+            Productivity Reimagined
+          </h4>
 
-        <div className="space-y-6">
-          <h1
-            className="text-5xl sm:text-6xl lg:text-8xl font-semibold leading-tight tracking-tighter"
+        </motion.div>
+
+        {/* Headline and subheadline */}
+        <motion.div
+          className="space-y-6 text-center"
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-semibold leading-tight tracking-tight text-gray-900"
             style={{
-              color: "#323843",
               fontFamily: "'Space Grotesk', sans-serif",
-            }}
-          >
-            {headline}
+            }}>
+            Work smarter with <br />
+            <motion.span
+              className="text-violet-dark"
+              animate={{ backgroundPosition: ['0%', '100%', '0%'] }}
+              transition={{ duration: 4, repeat: Infinity }}
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+              }}
+            >
+              AI assistance
+            </motion.span>
           </h1>
 
-          {/* Subheadline with muted slate */}
-          <p
-            className="text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed font-light"
-            style={{ color: "#323843", opacity: 0.7 }}
-          >
-            {subheadline}
+          <p className="text-md sm:text-lg max-w-3xl mx-auto leading-relaxed text-slate-light/90">
+            AI Taskie handles the mechanics while you handle what matters. <br/>Simple, fast, and built for people who actually get things done.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4 items-center">
-          <Link href={ctaHref}>
-            <Button
-              variant="primary"
-              className="text-sm font-semibold shadow-lg hover:shadow-xl"
+        {/* Key features highlight */}
+        {/* <motion.div
+          className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {[
+            { icon: <CheckCircle2 size={20} />, text: 'Smart Priority', color: '#cbe857' },
+            { icon: <Zap size={20} />, text: 'AI Assistant', color: '#c68dff' },
+            { icon: <Clock size={20} />, text: 'Due Dates', color: '#c68dff' },
+          ].map((feature, i) => (
+            <motion.div
+              key={i}
+              className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-200 bg-white"
+              whileHover={{ scale: 1.05, borderColor: feature.color }}
+              transition={{ type: 'spring', stiffness: 400, damping: 10 }}
             >
-              {ctaText}
+              <div style={{ color: feature.color }}>{feature.icon}</div>
+              <span className="text-sm font-medium text-gray-700">{feature.text}</span>
+            </motion.div>
+          ))}
+        </motion.div> */}
+
+        {/* CTA Buttons */}
+        <motion.div
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+          variants={itemVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.div
+            
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+          >
+            <Link href="/signup">            
+            <Button variant="primary">
+              Get Started Free
             </Button>
-          </Link>
-          <Link
-            href={secondaryCtaHref}
-            className="group flex items-center gap-2 font-semibold transition-all text-base"
-            style={{ color: "#323843" }}
-          >
-            <Button variant="secondary">{secondaryCtaText}</Button>
-          </Link>
-        </div>
+            </Link>
 
-        <div className="pt-12 mx-auto max-w-4xl">
-          <div
-            className="relative rounded-3xl shadow-2xl overflow-hidden border-4"
-            style={{ borderColor: "#c68dff", backgroundColor: "#ffffff" }}
+          </motion.div>
+          <motion.div
+            
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           >
-            {/* Mock app UI */}
-            <div className="p-8 space-y-6">
-              <div className="flex gap-2">
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#ff6b6b" }}
-                ></div>
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#cbe857" }}
-                ></div>
-                <div
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: "#ffd43b", opacity: 0.3 }}
-                ></div>
-              </div>
+            <Button variant="secondary">
+              See How it Works
+            </Button>
+          </motion.div>
+        </motion.div>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-5 h-5 rounded-lg flex-shrink-0"
-                    style={{ backgroundColor: "#cbe857" }}
-                  ></div>
-                  <div
-                    className="h-3 rounded-full flex-grow"
-                    style={{ backgroundColor: "#f5f5f5" }}
-                  ></div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-5 h-5 rounded-lg flex-shrink-0"
-                    style={{ backgroundColor: "#c68dff", opacity: 0.5 }}
-                  ></div>
-                  <div
-                    className="h-3 rounded-full flex-grow"
-                    style={{ backgroundColor: "#f5f5f5" }}
-                  ></div>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div
-                    className="w-5 h-5 rounded-lg flex-shrink-0"
-                    style={{ backgroundColor: "#323843", opacity: 0.2 }}
-                  ></div>
-                  <div
-                    className="h-3 rounded-full flex-grow"
-                    style={{ backgroundColor: "#f5f5f5" }}
-                  ></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        {/* Floating cards scattered around */}
+        {floatingCards.map((card) => (
+          <motion.div
+            key={card.id}
+            className="absolute group hidden lg:block"
+            style={{
+              top: card.position.top,
+              bottom: card.position.bottom,
+              left: card.position.left,
+              right: card.position.right,
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <motion.div
+              className="relative flex items-center justify-center w-14 h-14 rounded-md bg-white shadow-md hover:shadow-md transition-shadow"
+              animate={{
+                x: mousePosition.x * -20,
+                y: mousePosition.y * -20,
+              }}
+              transition={{ type: 'spring', stiffness: 150, damping: 25 }}
+              style={{ color: card.color }}
+            >
+              {card.icon}
+            </motion.div>
+          </motion.div>
+        ))}
+      </motion.div>
+
     </section>
   );
 }

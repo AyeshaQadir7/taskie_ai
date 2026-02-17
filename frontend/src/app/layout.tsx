@@ -26,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${spaceGrotesk.className} ${roboto.className}`}>
-      <body>
+    <html lang="en" className={`scroll-smooth ${spaceGrotesk.className} ${roboto.className}`}>
+      <body className=''>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
