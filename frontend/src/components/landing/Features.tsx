@@ -44,7 +44,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.25, 0.46, 0.45, 0.94],
+      ease: 'easeInOut' as const,
     },
   },
 };
@@ -78,9 +78,9 @@ export function Features({
   ],
 }: FeaturesProps) {
   return (
-    <section id="features" className="bg-white py-20 sm:py-32 px-4 sm:px-6 lg:px-8 relative overflow-visible">
+    <section id="features" className="bg-white py-20 sm:py-32 px-6 sm:px-6 lg:px-8 relative overflow-visible">
       {/* Blur blob background - positioned in section */}
-      <div className="absolute -left-20 top-48 w-96 h-96 bg-violet/30 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute hidden md:block -left-20 top-48 w-96 h-96 bg-violet/30 rounded-full blur-3xl pointer-events-none"></div>
 
       <div className="w-full max-w-6xl mx-auto relative z-10">
         <motion.div

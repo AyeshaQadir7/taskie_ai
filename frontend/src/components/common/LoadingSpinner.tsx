@@ -8,7 +8,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-interface LoadingSpinnerProps {
+export interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg'
   message?: string
   fullscreen?: boolean

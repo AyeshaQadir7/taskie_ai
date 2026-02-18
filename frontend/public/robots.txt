@@ -1,0 +1,19 @@
+# Taskie - Todo App
+# Allow search engines to crawl public pages, disallow authenticated areas
+
+User-agent: *
+Allow: /
+Disallow: /tasks
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /chat
+
+# Allow crawling of auth pages for discoverability
+Allow: /signin
+Allow: /signup
+
+# Sitemap location
+Sitemap: https://taskie.app/sitemap.xml
+
+# Add a 2-second crawl delay to reduce server load
+Crawl-delay: 2
