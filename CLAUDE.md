@@ -85,3 +85,35 @@ Required in both frontend and backend:
 
 - `BETTER_AUTH_SECRET` - Shared secret for JWT token signing/verification
 - `DATABASE_URL` - Neon PostgreSQL connection string
+
+## Frontend Quality Standards
+
+### Accessibility (WCAG 2.1 Level AA)
+- **Button Accessible Names**: All buttons must have descriptive accessible names via:
+  - Text content (preferred)
+  - `aria-label` attribute for icon-only buttons
+  - `aria-labelledby` for complex buttons
+- **Form Labels**: All form inputs must have associated `<label>` elements
+- **Semantic HTML**: Use proper heading hierarchy (h1 > h2 > h3), semantic elements (`<button>`, `<form>`, `<nav>`)
+- **Color Contrast**: Ensure minimum 4.5:1 contrast ratio for text
+- **Focus Management**: Keyboard navigation must be fully functional
+- **Testing**: Run Lighthouse accessibility audit before merging PRs (target score: 90+)
+
+### Performance Standards
+- **Render-blocking Resources**: Minimize CSS/JS that blocks initial render
+  - Tailwind CSS is configured with PostCSS minification (`cssnano`) for production
+  - Cache static assets with long-lived headers (1 year for versioned files)
+- **Target Metrics**:
+  - LCP (Largest Contentful Paint): < 2.5s
+  - FCP (First Contentful Paint): < 1.8s
+  - CLS (Cumulative Layout Shift): < 0.1
+- **Asset Management**:
+  - All referenced assets in `manifest.json` must exist in `/public` directory
+  - Use existing logo files instead of creating duplicate icon files
+
+### Configuration
+- **PostCSS**: CSS minification via `cssnano` enabled in production builds
+- **Next.js**: CSS optimization enabled via `experimental.optimizeCss`
+- **Tailwind**: Configured with design system tokens in `tailwind.config.ts`
+  - Custom colors: slate, violet, lime (from design-guide.md)
+  - Responsive breakpoints: mobile (320px), tablet (768px), desktop (1024px)

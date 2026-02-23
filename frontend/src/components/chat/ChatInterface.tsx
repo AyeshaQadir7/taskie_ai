@@ -308,6 +308,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({
                       style={{
                         fontFamily: "'Space Grotesk'"
                       }}
+                      aria-label={`Send message: ${chip.text}`}
                     >
 
                       <span className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center group-hover:text-white transition-colors duration-200">

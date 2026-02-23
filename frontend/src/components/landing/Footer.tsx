@@ -48,23 +48,22 @@ const SOCIAL_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="relative bg-slate w-full">
+    <footer className="relative w-full border border-t-2">
       {/* Decorative background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-violet/10 rounded-full blur-3xl -translate-y-1/2"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-lime/10 rounded-full blur-3xl translate-y-1/2"></div>
+
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Main content */}
-        <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="py-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Brand Section */}
           <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2 w-fit">
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-violet/20">
-                <Grid2x2Check className="w-5 h-5 text-violet" />
+            <Link href="/" className="flex items-center w-fit">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center text-violet-dark">
+                <Grid2x2Check className="w-5 h-5" />
               </div>
-              <span className="text-lg font-bold text-white" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <span className="text-lg font-bold text-violet-dark" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
                 Taskie
               </span>
             </Link>
@@ -75,16 +74,16 @@ export function Footer() {
               {SOCIAL_LINKS.map((social) => {
                 const Icon = social.icon;
                 return (
-                  <a
+                  <Link
                     key={social.label}
                     href={social.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 rounded-lg bg-gray-800 text-gray-300 hover:bg-violet/20 hover:text-violet transition-all"
+                    className="p-2 rounded-lg bg-slate-light text-gray-300 hover:bg-violet/20 hover:text-violet transition-all"
                     aria-label={social.label}
                   >
                     <Icon className="w-4 h-4" />
-                  </a>
+                  </Link>
                 );
               })}
             </div>
@@ -93,63 +92,45 @@ export function Footer() {
           {/* Link Sections */}
           {FOOTER_SECTIONS.map((section) => (
             <div key={section.title} className="space-y-4">
-              <h4 className="text-white font-semibold text-sm uppercase tracking-wider">
+              <h4 className="text-gray-600 font-semibold text-sm uppercase tracking-wider">
                 {section.title}
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2">
                 {section.links.map((link) => (
                   <li key={link.label}>
-                    <a
+                    <Link
                       href={link.href}
                       className="text-gray-400 hover:text-violet text-sm transition-colors"
                     >
                       {link.label}
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </div>
           ))}
         </div>
-
-        {/* Divider */}
-        <div className="h-px bg-gradient-to-r from-transparent via-slate-light/20 to-transparent"></div>
-
-        {/* Created by section */}
-        <div className="py-6 flex flex-col sm:flex-row items-center justify-center gap-2 text-gray-500 text-sm">
-          <span>Made with</span>
-          <Heart className="w-4 h-4 text-red-500 fill-red-500" />
-          <span>by</span>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-violet hover:text-violet-dark font-semibold transition-colors"
-          >
-            Your Name
-          </a>
-        </div>
-
-        {/* Bottom section */}
+                {/* Bottom section */}
         <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-slate-light/10">
           <p className="text-gray-500 text-sm">
             &copy; {new Date().getFullYear()} Taskie. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
             <Link
-              href="/privacy"
+              href="#"
               className="text-gray-500 hover:text-violet text-sm transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
-              href="/terms"
+              href="#"
               className="text-gray-500 hover:text-violet text-sm transition-colors"
             >
               Terms of Service
             </Link>
           </div>
         </div>
+
       </div>
     </footer>
   );

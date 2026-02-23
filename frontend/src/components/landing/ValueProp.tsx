@@ -199,6 +199,7 @@ const ChatMockup = () => (
         style={{ backgroundColor: "#c68dff" }}
         whileHover={{ scale: 1.05 }}
         disabled
+        aria-label="Send message"
       >
         <ArrowUp className="w-5 h-5" />
       </motion.button>
@@ -234,7 +235,7 @@ export function ValueProp({
   const featureIds = ["dashboard", "assistant"] as const;
 
   return (
-    <section id="value-prop" className="relative py-20 sm:py-32 px-12 sm:px-20 lg:px-20 overflow-hidden">
+    <section id="value-prop" className="relative py-20 sm:py-32 px-8 sm:px-12 lg:px-20 overflow-hidden">
       {/* Background blurs */}
       {/* <div className="absolute top-1/3 -right-48 w-96 h-96 bg-violet/10 rounded-full blur-3xl pointer-events-none"></div>
       <div className="absolute bottom-1/3 -left-48 w-96 h-96 bg-lime/10 rounded-full blur-3xl pointer-events-none"></div> */}

@@ -67,6 +67,7 @@ export default function EditTaskPage() {
         <button
           onClick={() => router.push('/tasks')}
           className="mt-4 text-blue-600 hover:text-blue-700"
+          aria-label="Go back to tasks"
         >
           Back to tasks
         </button>

@@ -8,7 +8,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/lib/auth/useAuth'
-import { LayoutDashboard, CheckSquare, MessageSquare, Settings, LogOut } from 'lucide-react'
+import { LayoutDashboard, CheckSquare, MessageSquare, Settings, LogOut, Grid2x2Check } from 'lucide-react'
 
 export function Sidebar() {
   const pathname = usePathname()
@@ -31,8 +31,21 @@ export function Sidebar() {
   return (
     <div className="fixed left-0 top-0 h-screen w-64 bg-[#fff] border-r border-slate-light/10 shadow-sm flex flex-col">
       {/* Branding */}
-      <div className="px-6 py-6 border-b border-slate-light/10">
-        <h1 className="text-xl font-grotesk font-semibold text-slate">Taskie</h1>
+      <div className="px-6 py-4 border-b border-slate-light/10">
+          <Link href="/" className="group flex items-center ">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+              <Grid2x2Check color="#3d444f" className="w-6 h-6 text-violet" />
+            </div>
+            <span
+              className="text-xl font-bold hidden sm:block"
+              style={{
+                color: "#323843",
+                fontFamily: "'Space Grotesk', sans-serif",
+              }}
+            >
+              Taskie
+            </span>
+          </Link>
       </div>
 
       {/* Navigation */}

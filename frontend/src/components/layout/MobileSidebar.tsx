@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuth } from '@/lib/auth/useAuth'
-import { X, LayoutDashboard, CheckSquare, MessageSquare, Settings, LogOut } from 'lucide-react'
+import { X, LayoutDashboard, CheckSquare, MessageSquare, Settings, LogOut, Grid2x2Check } from 'lucide-react'
 
 interface MobileSidebarProps {
   isOpen: boolean

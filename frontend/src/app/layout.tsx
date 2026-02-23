@@ -96,6 +96,20 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
+        {/* Inline critical styles for initial render */}
+        <style dangerouslySetInnerHTML={{__html: `
+          html { scroll-behavior: smooth; }
+          body {
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #323843;
+            font-family: 'Roboto', 'Space Grotesk', system-ui, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+          }
+        `}} />
+
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -123,7 +137,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className='max-w-[1400px] mx-auto overflow-x-hidden scroll-smooth'>
+      <body className='bg-white max-w-[1400px] mx-auto overflow-x-hidden scroll-smooth'>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

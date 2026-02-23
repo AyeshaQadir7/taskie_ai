@@ -159,6 +159,7 @@ export function TaskItem({
                     onClick={() => setShowDeleteConfirm(false)}
                     className="flex items-center gap-1 rounded px-2 py-1 text-sm text-gray-600 hover:bg-gray-100 transition-colors"
                     title="Cancel delete"
+                    aria-label="Cancel delete"
                   >
                     <X size={16} />
                   </button>

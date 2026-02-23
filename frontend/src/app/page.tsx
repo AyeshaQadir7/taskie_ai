@@ -7,7 +7,7 @@
 import type { Metadata } from 'next'
 import { LandingHeader } from '@/components/landing/LandingHeader'
 import { Hero } from '@/components/landing/Hero.dynamic'
-import { Features } from '@/components/landing/Features.dynamic'
+import { Features } from '@/components/landing/Features'
 import { ValueProp } from '@/components/landing/ValueProp.dynamic'
 import { LandingCTA } from '@/components/landing/LandingCTA.dynamic'
 import { Footer } from '@/components/landing/Footer'
