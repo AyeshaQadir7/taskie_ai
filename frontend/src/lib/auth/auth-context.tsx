@@ -7,7 +7,7 @@
  */
 
 import React, { createContext, useState, useCallback, useEffect, ReactNode } from "react";
-import { clearToken, saveToken, getUser } from "@/lib/auth/jwt-storage";
+import { clearToken, saveToken, getUser, getToken, isTokenExpired } from "@/lib/auth/jwt-storage";
 import { User, AuthError } from "@/lib/api/types";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000';
@@ -33,19 +33,30 @@ export interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // Start as true to prevent race conditions
   const [error, setError] = useState<AuthError | null>(null);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   // Restore user from localStorage on mount and listen for storage changes
   useEffect(() => {
     try {
+      const token = getToken();
       const savedUser = getUser();
-      if (savedUser) {
+
+      // Check if token exists and is not expired
+      if (token && savedUser && !isTokenExpired(token)) {
         setUser(savedUser);
+      } else if (token && isTokenExpired(token)) {
+        // Token expired, clear storage
+        clearToken();
+        setUser(null);
       }
     } catch (err) {
       // If there's an error restoring user, just continue
       console.error("Failed to restore user from localStorage:", err);
+    } finally {
+      setIsHydrated(true);
+      setIsLoading(false);
     }
 
     // Listen for storage changes from other tabs

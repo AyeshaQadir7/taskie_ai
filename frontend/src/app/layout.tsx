@@ -83,7 +83,7 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
 }
 
-export default function RootLayout({
+function RootLayoutContent({
   children,
 }: {
   children: React.ReactNode
@@ -142,4 +142,12 @@ export default function RootLayout({
       </body>
     </html>
   )
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return <RootLayoutContent>{children}</RootLayoutContent>
 }
