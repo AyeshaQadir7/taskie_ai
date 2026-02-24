@@ -1,20 +1,16 @@
 /**
  * Next.js Middleware
  * Implements route protection and authentication flow
- *
- * Note: Route protection is primarily handled by:
- * 1. API client checks for JWT token and includes Authorization header
- * 2. API returns 401 Unauthorized if token is missing/invalid
- * 3. API client redirects to /signin on 401
- *
- * Since JWT is stored in localStorage (client-side), it cannot be read in middleware.
- * Therefore, protection is enforced at the API level.
+ * Redirects unauthenticated users away from protected routes
  */
 
 import { NextRequest, NextResponse } from 'next/server'
 
 // Routes that don't require authentication
 const publicRoutes = ['/signin', '/signup', '/']
+
+// Routes that require authentication
+const protectedRoutes = ['/dashboard', '/tasks', '/chat', '/profile']
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
@@ -27,9 +23,23 @@ export function middleware(request: NextRequest) {
     return pathname.startsWith(route)
   })
 
-  // Protected routes will be handled by API protection
-  // When pages load, they make API calls which include JWT token
-  // If token is missing, API returns 401 and client redirects to signin
+  // Check if route is protected
+  const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
+
+  // If it's a protected route, check for auth token
+  if (isProtectedRoute) {
+    const token = request.cookies.get('auth_token')?.value
+
+    // No token found, redirect to signin
+    if (!token) {
+      return NextResponse.redirect(new URL('/signin', request.url))
+    }
+  }
+
+  // If authenticated user tries to access auth pages, redirect to dashboard
+  if ((pathname.startsWith('/signin') || pathname.startsWith('/signup')) && request.cookies.get('auth_token')?.value) {
+    return NextResponse.redirect(new URL('/dashboard', request.url))
+  }
 
   return NextResponse.next()
 }

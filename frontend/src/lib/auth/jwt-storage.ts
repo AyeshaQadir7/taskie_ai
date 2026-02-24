@@ -19,9 +19,18 @@ export interface StoredUser {
  */
 export function saveToken(token: string, user?: StoredUser): void {
   try {
+    // Save to localStorage for SPA navigation
     localStorage.setItem(TOKEN_KEY, token);
     if (user) {
       localStorage.setItem(USER_KEY, JSON.stringify(user));
+    }
+
+    // Also save token to cookie for middleware access
+    // Set cookie with 7-day expiration (matches JWT expiration)
+    if (typeof document !== 'undefined') {
+      const expirationDate = new Date();
+      expirationDate.setDate(expirationDate.getDate() + 7);
+      document.cookie = `auth_token=${token}; path=/; expires=${expirationDate.toUTCString()}; SameSite=Strict`;
     }
   } catch (error) {
     console.error('Failed to save token:', error);
@@ -58,8 +67,14 @@ export function getUser(): StoredUser | null {
  */
 export function clearToken(): void {
   try {
+    // Clear from localStorage
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
+
+    // Clear cookie
+    if (typeof document !== 'undefined') {
+      document.cookie = `auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT; SameSite=Strict`;
+    }
   } catch (error) {
     console.error('Failed to clear token:', error);
   }
