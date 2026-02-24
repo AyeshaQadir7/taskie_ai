@@ -9,9 +9,13 @@ import { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth/useAuth'
-import { ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import { ChevronDown, LogOut, Settings, User, Menu } from 'lucide-react'
 
-export function TopHeader() {
+export interface TopHeaderProps {
+  onMobileMenuOpen?: () => void
+}
+
+export function TopHeader({ onMobileMenuOpen }: TopHeaderProps) {
   const pathname = usePathname()
   const router = useRouter()
   const { user, signOut, isLoading } = useAuth()
@@ -51,7 +55,16 @@ export function TopHeader() {
     <header className="sticky top-0 z-40 bg-[#fff] border-b border-gray-200 ">
       <div className="px-4 md:px-6 lg:px-8 py-3.5">
         <div className="flex items-center justify-between gap-4">
-          {/* Left: Navigation Links */}
+          {/* Left: Mobile Menu Button */}
+          <button
+            onClick={onMobileMenuOpen}
+            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            aria-label="Open menu"
+          >
+            <Menu className="w-6 h-6 text-slate" />
+          </button>
+
+          {/* Center: Navigation Links (desktop only) */}
           <nav className="hidden md:flex items-center gap-1">
             {navItems.map(({ label, href }) => {
               const isActive = pathname === href || pathname.startsWith(href + '/')
