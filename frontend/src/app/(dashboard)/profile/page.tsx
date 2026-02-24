@@ -33,7 +33,7 @@ export default function ProfilePage() {
   };
 
   if (isLoading || isSigningOut) {
-    return <LoadingSpinner message="Signing out..." fullscreen />;
+    return <LoadingSpinner message="Signing out..." fullscreen variant="bars" />;
   }
 
   return (

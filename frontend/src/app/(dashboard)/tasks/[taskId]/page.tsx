@@ -54,7 +54,7 @@ export default function EditTaskPage() {
   }
 
   if (isLoadingTask) {
-    return <LoadingSpinner message="Loading task..." fullscreen />
+    return <LoadingSpinner message="Loading task..." fullscreen variant="bars" />
   }
 
   if (taskError || !task) {
@@ -93,7 +93,7 @@ export default function EditTaskPage() {
   }
 
   if (isLoading && isSubmitting) {
-    return <LoadingSpinner message="Updating task..." fullscreen />
+    return <LoadingSpinner message="Updating task..." fullscreen variant="bars" />
   }
 
   return (

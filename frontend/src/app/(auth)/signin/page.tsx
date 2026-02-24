@@ -25,7 +25,7 @@ export default function SignInPage() {
   }
 
   if (isLoading) {
-    return <LoadingSpinner message="Signing in..." fullscreen />
+    return <LoadingSpinner message="Signing in..." fullscreen variant="bars" />
   }
 
   return (

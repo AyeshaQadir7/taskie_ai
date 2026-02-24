@@ -29,7 +29,7 @@ export default function SignUpPage() {
   }
 
   if (isLoading) {
-    return <LoadingSpinner message="Creating your account..." fullscreen />
+    return <LoadingSpinner message="Creating your account..." fullscreen variant="bars" />
   }
 
   return (

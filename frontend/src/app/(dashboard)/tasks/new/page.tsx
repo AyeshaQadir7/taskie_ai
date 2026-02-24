@@ -42,7 +42,7 @@ export default function CreateTaskPage() {
   }
 
   if (isLoading && isSubmitting) {
-    return <LoadingSpinner message="Creating task..." fullscreen />
+    return <LoadingSpinner message="Creating task..." fullscreen variant="bars" />
   }
 
   return (
