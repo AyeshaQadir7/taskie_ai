@@ -26,11 +26,6 @@ function transformTask(task: any): Task {
     return str
   }
 
-  // Debug: Log tasks with due dates
-  if (task.due_date) {
-    console.log(`Task "${task.title}" has due_date:`, task.due_date)
-  }
-
   return {
     id: String(task.id),
     userId: task.user_id,

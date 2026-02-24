@@ -1,13 +1,14 @@
 /* LoadingIndicator Component - Typing indicator with bouncing dots */
 
+import { Grid2x2Check } from 'lucide-react';
 import React from 'react';
 
 const LoadingIndicator: React.FC = () => {
   return (
     <div className="flex justify-start gap-3 mb-4 animate-fade-in">
       {/* Avatar */}
-      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-violet to-violet-dark flex items-center justify-center shadow-sm">
-        <span className="text-white text-xs font-bold">T</span>
+      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-violet flex items-center justify-center shadow-sm">
+        <span className="text-white text-xs"> <Grid2x2Check className="w-4 h-4 text-white" /></span>
       </div>
 
       {/* Typing dots */}
