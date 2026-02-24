@@ -33,9 +33,8 @@ export interface AuthProviderProps {
 
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // Start as true to prevent race conditions
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<AuthError | null>(null);
-  const [isHydrated, setIsHydrated] = useState(false);
 
   // Restore user from localStorage on mount and listen for storage changes
   useEffect(() => {
@@ -54,9 +53,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
     } catch (err) {
       // If there's an error restoring user, just continue
       console.error("Failed to restore user from localStorage:", err);
-    } finally {
-      setIsHydrated(true);
-      setIsLoading(false);
     }
 
     // Listen for storage changes from other tabs
