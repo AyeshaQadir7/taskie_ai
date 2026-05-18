@@ -1,6 +1,6 @@
 # Taskie | AI-Powered Task Management App
 
-A modern web application for managing tasks with an AI chat assistant, built with Next.js, FastAPI, OpenAI Agents SDK and PostgreSQL.
+A modern web application for managing tasks with an AI chat assistant that can add, update, delete tasks, built with Next.js, FastAPI, OpenAI Agents SDK and PostgreSQL.
 
 ## Features
 
